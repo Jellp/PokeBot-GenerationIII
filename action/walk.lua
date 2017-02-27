@@ -12,6 +12,8 @@ local Pokemon = require "storage.pokemon"
 
 
 local path, stepIdx, currentMap, currentMap2
+local px2 = 0
+local py2 = 0
 local pathIdx = 0
 local customIdx = 1
 local customDir = 1
@@ -19,10 +21,27 @@ local customDir = 1
 -- Private functions
 
 local function setPath(index, region)
-	pathIdx = index
-	stepIdx = 2
-	currentMap = region
-	path = Paths[index]
+	print("Set path: "..index.." in region "..region.."")
+	if region ~= 510 then --Region 510 is a, eh, glitched region?
+		pathIdx = index
+		stepIdx = 2
+		currentMap = region
+		path = Paths[index]
+		local px2, py2 = Player.position()
+		
+		while path[1] ~= region do --Temporary workaround, might want to make a region blacklist which would ignore the region change
+			index = index + 1
+			pathIdx = index
+			path = Paths[index]
+			print("Set path: "..index.." in region "..region.."")
+		end
+		print("Set path: "..index.." in region "..region.."")
+	else 
+		pathIdx = index - 1
+		stepIdx = 2
+		currentMap = region
+		path = Paths[index - 1]
+	end
 end
 
 local function completeStep(region)
@@ -43,6 +62,8 @@ function dir(px, py, dx, dy)
 	else
 		direction = "Right"
 	end
+	--This thing spams the hell out of everything, only use in critical debugging.
+	--print("Decided to go "..direction..", px:"..px.."py:"..py.."dx:"..dx.."dy:"..dy.."")
 	return direction
 end
 Walk.dir = dir
@@ -50,8 +71,20 @@ Walk.dir = dir
 function step(dx, dy, slow)
 	local px, py = Player.position()
 	if px == dx and py == dy then
+		px2 = px
+		py2 = py
 		return true
 	end
+	--Due to some Emerald mechanics I assume, I'm going to need to check if our coordinates warped without changing region.
+	if px + py > px2 + py2 + 3 then --If you get moved 3 or more coordinates since last check we assume a warp.
+		print("Warped!")
+		print("From "..px2..", "..py2.." to "..px..", "..py)
+		px2 = px
+		py2 = py
+		return true --...and just skip to the next step.
+	end
+	px2 = px
+	py2 = py
 	--set slow mode
 	local SlowMode = false
 	if slow ~= nil and slow == true then

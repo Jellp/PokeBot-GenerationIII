@@ -10,12 +10,12 @@ RESET_FOR_ENCOUNTERS = false 	-- Set to false if you just want to see the bot fi
 
 --Game Settings
 GAME_NAME = "Emerald"			-- Set to Ruby/Sapphire or Emerald
-GAME_HOURS = 17					-- Set the internal game hour (0-23h)
-GAME_MINUTES = 35				-- Set the internal game minutes (0-59min)
-GAME_GENDER = 1					-- Set the player gender (1-2 // boy-girl)
+GAME_HOURS = 10					-- Set the internal game hour (0-23h)
+GAME_MINUTES = 0				-- Set the internal game minutes (0-59min)
+GAME_GENDER = 2				-- Set the player gender (1-2 // boy-girl)
 
 GAME_TEXT_SPEED = 2				-- Set the Text Speed (0-2 // slow-fast)
-GAME_BATTLE_ANIMATION = 1		-- Set the battle animation (0-1 // no-yes)
+GAME_BATTLE_ANIMATION = 0		-- Set the battle animation (0-1 // no-yes)
 GAME_BATTLE_STYLE = 1			-- Set the battle style (0-1 // shift-set)
 GAME_SOUND_STYLE = 1			-- Set the sound style (0-1 // stereo-mono)
 GAME_BUTTON_STYLE = 0			-- Set the button style (0-2)
@@ -30,9 +30,9 @@ CUSTOM_SEED = nil		 		-- Set to a known seed to replay it, or leave nil for rand
 PAINT_ON    = true 				-- Display contextual information while the bot runs
 
 --Names Settings 
-PLAYER_NAME = "TeStInG"			-- Player name
-RIVAL_NAME = "URRival"			-- Rival name
-MUDKIP_NAME = "Muddy"			-- Set Mudkip name
+PLAYER_NAME = "DOULIKE"			-- Player name
+RIVAL_NAME = "B"			-- Rival name
+MUDKIP_NAME = "MUDKIPZ"			-- Set Mudkip name
 
 --NAMES SETTINGS TIPS : 
 --		- Can use up to 7 letter ingame
@@ -57,7 +57,7 @@ MUDKIP_NAME = "Muddy"			-- Set Mudkip name
 
 -- SET VALUES
 
-local VERSION = "0.1-BETA"
+local VERSION = "E-0.2.0-BETA" --Emerald-MAJOR-AREA-PATHEDITS
 
 local START_WAIT = 99
 local hasAlreadyStartedPlaying = false
@@ -138,8 +138,10 @@ end
 -- EXECUTE
 
 local OWNER = "Bouletmarc"
-p("Welcome to PokeBot Version "..VERSION, true)
-p("Actually running Pokemon "..GAME_NAME.." Speedruns by "..OWNER, true)
+--p("PokeBot Version "..VERSION, true)
+--p("Running Pokemon "..GAME_NAME, true)
+print("PokeBot version "..VERSION)
+print("Running Pokemon "..GAME_NAME)
 
 Control.init()
 
@@ -175,6 +177,7 @@ while true do
 		Input.clear()
 		previousMap = currentMap
 	end
+	
 	--if Strategies.frames then
 		--if Memory.value("game", "battle") == 0 then
 	--		Strategies.frames = Strategies.frames + 1
@@ -202,8 +205,8 @@ while true do
 				Bridge.liveSplit()
 				running = true
 			end
-			--local battleState = Memory.value("game", "battle")
-			--Control.encounter(battleState)
+			local battleState = Memory.value("game", "battle")
+			Control.encounter(battleState)
 			--local curr_hp = Pokemon.index(0, "hp")
 			--if curr_hp == 0 and not Control.canDie() and Pokemon.index(0) > 0 then
 			--	Strategies.death(currentMap)

@@ -64,10 +64,11 @@ end
 
 function Settings.startNewAdventure(startWait)
 	local startMenu = Memory.value("menu", "main")
-	--local MenuCurrent = Memory.value("menu", "current")
+	local MenuCurrent = Memory.value("menu", "current")
 	local SettingsCurrent = Memory.value("menu", "settings_current")
 	local Row = Memory.value("menu", "row")
 	local GenderRow = Memory.value("menu", "settings_row")
+	local GenderTag = false
 	
 	--press A
 	if startMenu == 30 then
@@ -92,14 +93,19 @@ function Settings.startNewAdventure(startWait)
 		end
 	--Set Gender
 	elseif startMenu == 19 then
-		if SettingsCurrent == 13 or SettingsCurrent == 14 then
-			if GenderRow == 1 and GAME_GENDER == 2 then
+		if SettingsCurrent == 14 or SettingsCurrent == 15 then
+			if GenderRow == 0 and GAME_GENDER == 2 then
 				Input.press("Down", 2)
-			elseif GenderRow == 2 and GAME_GENDER == 1 then
+			elseif GenderRow == 1 and GAME_GENDER == 1 then
 				Input.press("Up", 2)
 			else
 				Input.press("A", 2)
 			end
+			--if GenderRow == 1 and GAME_GENDER == 2 then
+			--	Input.press("A", 2)
+			--elseif GenderRow == 0 and GAME_GENDER == 1 then 
+			--	Input.press("A", 2)
+			--end
 		else
 			Input.press("A", 2)
 		end

@@ -304,6 +304,33 @@ Strategies.functions = {
 	allowDeath = function(data)
 		Control.canDie(data.on)
 		return true
+	end, 
+	
+	IHeardYouLikeMudkip = function()
+		
+		local choice = Memory.value("menu", "starter")
+		
+		if Strategies.initialize() then
+			status.tempDir = false
+		end
+		if Textbox.isActive() then
+			status.tempDir = false
+			return true
+		else
+			if status.tempDir and Textbox.isActive() then --This would mean the battle should have started?
+				status.tempDir = false
+				return true
+			elseif status.tempDir and choice ~= 2 then 
+				Input.press("Right", 2)
+			elseif status.tempDir and choice == 2 then
+				Input.press("A", 2)
+				status.tempDir = false -- Assuming we selected correctly, I sure hope so. >_>
+				return true
+			else 
+				Input.press("A", 2)
+				status.tempDir = true --Kinda just assume we've started the chat.
+			end
+		end
 	end,
 
 	--[[champion = function()

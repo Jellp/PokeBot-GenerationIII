@@ -35,6 +35,7 @@ local memoryNames = {
 		main_current = 0x5E00,
 		option_current = 0x0859,
 		settings_current = 0x5E01,
+		starter = 0x5E08, 
 		--shop_current = 0x0F87,
 		--selection = 0x0F78,
 		text_input = 0x20667,	--1=inputing
@@ -53,7 +54,7 @@ local memoryNames = {
 		--party_size = 0x1CD7,
 	},
 	game = {
-		--battle = 0x122D,		--1=wild 2=trainer
+		battle = 0x0F2C,		--1=wild 2=trainer
 		ingame = 0x0E08,
 		textbox = 0x0E40,
 		--textbox = 0x5DF0,

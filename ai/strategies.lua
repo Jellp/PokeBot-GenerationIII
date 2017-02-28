@@ -315,8 +315,10 @@ Strategies.functions = {
 			status.tempDir = false
 		end
 		if Textbox.isActive() then
+
 			status.tempDir = false
 			return true
+
 		else
 			if status.tempDir and Textbox.isActive() then --This would mean the battle should have started?
 				status.tempDir = false
@@ -324,8 +326,6 @@ Strategies.functions = {
 			elseif status.tempDir and choice ~= 2 then 
 				Input.press("Right", 2)
 			elseif status.tempDir and choice == 2 then
-				Input.press("A", 2)
-			elseif current == 191 then --Still bugged, need another variable or check.
 				Input.press("A", 2)
 			else 
 				Input.press("A", 2)

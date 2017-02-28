@@ -9,6 +9,7 @@ local Paint = require "util.paint"
 local Utils = require "util.utils"
 local Inventory = require "storage.inventory"
 local Pokemon = require "storage.pokemon"
+local Input = require "util.input"
 
 local potionInBattle = true
 local encounters = 0
@@ -207,11 +208,15 @@ function Control.encounters()
 	return encounters
 end
 
-function Control.encounter(battleState)
-	if battleState > 0 then
+function Control.encounter(battlemenu)
+	if battlemenu > 5 then
 		local wildBattle = false
-		if battleState == 1 then
+		local canrun = Memory.value("battle", "canrun")
+		if canrun == 0 then
 			wildBattle = true
+		elseif canrun == 3 then 
+			--Mudkip intro battle, we can mash A for this one :D
+			Input.press("A", 2)
 		end
 		--[[local isCritical
 		local battleMenu = Memory.value("battle", "menu")

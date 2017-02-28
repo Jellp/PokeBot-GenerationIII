@@ -7,5 +7,7 @@ SystemID GBA
 5E08	b	u	0	IWRAM	Starter
 0F2C	d	u	0	IWRAM	CanMove
 5D60	b	u	0	IWRAM	Battle - menu
-5DF0	b	u	0	IWRAM	Battle?
+5DF0	b	u	0	IWRAM	Battle? (Or CanFlee? 2 = no)
+0240AC	b	u	0	EWRAM	HP Current/first pokemon
+024542	b	u	0	EWRAM	HP Current/first pokemon
 

@@ -74,8 +74,9 @@ local memoryNames = {
 	battle = {
 		text = 0x24068,				--
 		menu = 0x5D60,				--253(att) // 137(main) // 225(item) // 41(pkmon)
-		--menuX = 0x0FAA,				--used for battle menu Row-X
-		--menuY = 0x0FA9,				--used for battle menu Row-Y
+		canrun = 0x5DF0,				--0 = yes, 2 = no, anything else is a special snowflake.
+		main_menu = 0x244AC,				--cursor, 0 = top left, 1 = top right,
+		move_menu = 0x244B0,				--2 = bottom left, 3 = bottom right.
 		--battle_turns = 0x06DD,		--USED FOR DSUM ESCAPE??
 		
 		opponent_id = 0x240DC,		--or 0x1204??
@@ -140,7 +141,6 @@ local doubleNames = {
 	},
 	
 	player = {
-		battle = 0x090E, 
 		x = 0x37364,
 		y = 0x37366,
 	},

@@ -5,8 +5,9 @@ SystemID GBA
 0820	b	u	0	IWRAM	Current?
 5E08	b	u	0	IWRAM	Starter
 0F2C	d	u	0	IWRAM	CanMove
-5D60	b	u	0	IWRAM	Battle - menu
+5D60	b	u	0	IWRAM	Battle - menu (Nope, something else, might be of use to recognise combat though)
 5DF0	b	u	0	IWRAM	Battle? (Or CanFlee? 2 = no)
+090E	b	u	0	IWRAM	Battling?
 0	S	_	1		
 0240AC	b	u	0	EWRAM	HP current pokemon
 0240B0	b	u	0	EWRAM	maxHP current pokemon

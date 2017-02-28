@@ -30,7 +30,7 @@ CUSTOM_SEED = nil		 		-- Set to a known seed to replay it, or leave nil for rand
 PAINT_ON    = true 				-- Display contextual information while the bot runs
 
 --Names Settings 
-PLAYER_NAME = "DOULIKE"			-- Player name
+PLAYER_NAME = "B"			-- Player name
 RIVAL_NAME = "B"			-- Rival name
 MUDKIP_NAME = "MUDKIPZ"			-- Set Mudkip name
 

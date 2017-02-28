@@ -309,6 +309,7 @@ Strategies.functions = {
 	IHeardYouLikeMudkip = function()
 		
 		local choice = Memory.value("menu", "starter")
+		local current = Memory.value("menu", "current")
 		
 		if Strategies.initialize() then
 			status.tempDir = false
@@ -324,8 +325,8 @@ Strategies.functions = {
 				Input.press("Right", 2)
 			elseif status.tempDir and choice == 2 then
 				Input.press("A", 2)
-				status.tempDir = false -- Assuming we selected correctly, I sure hope so. >_>
-				return true
+			elseif current == 191 then --Still bugged, need another variable or check.
+				Input.press("A", 2)
 			else 
 				Input.press("A", 2)
 				status.tempDir = true --Kinda just assume we've started the chat.

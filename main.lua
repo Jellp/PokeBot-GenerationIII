@@ -205,7 +205,7 @@ while true do
 				Bridge.liveSplit()
 				running = true
 			end
-			local battleState = Memory.value("game", "battle")
+			local battleState = Memory.value("game", "battle") --3/4 variabelen om te zien of we een battle hebben, CanMove (0F2C), Battle - menu (>5) (5D60), CanFlee (2) (5DF0), Battling (090E).
 			Control.encounter(battleState)
 			--local curr_hp = Pokemon.index(0, "hp")
 			--if curr_hp == 0 and not Control.canDie() and Pokemon.index(0) > 0 then

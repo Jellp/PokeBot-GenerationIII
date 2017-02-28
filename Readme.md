@@ -1,4 +1,4 @@
-# PokéBot Generation II
+# PokéBot Generation III
 
 An automated computer program that speedruns Pokémon Emerald (ruby/sapphire not made yet).
 
@@ -12,9 +12,9 @@ Running the PokéBot on your own machine is easy. You will need a Windows enviro
 
 3. Run [the BizHawk prerequisites installer](http://sourceforge.net/projects/bizhawk/files/Prerequisites/bizhawk_prereqs_v1.1.zip/download), which should update a C++ distributable needed by BizHawk.
 
-4. Procure a ROM file of Pokémon Crystal (not yet for gold/silver) english version (japan might not work and you should personally own the game).
+4. Procure a ROM file of Pokémon Emerald english version (japan might not work and you should personally own the game).
 
-5. Open the ROM file with BizHawk (drag the `.gb` file onto EmuHawk), and Pokémon should start up. Otherwise select Open ROM in EmuHawk.
+5. Open the ROM file with BizHawk (drag the `.gba` file onto EmuHawk), and Pokémon should start up. Otherwise select Open ROM in EmuHawk.
 
 6. Then, under the _Tools_ menu, select _Lua Console_. Click the “open folder” button, and navigate to the PokéBot folder you downloaded. Select `main.lua` and press “open”. The bot should start running!
 

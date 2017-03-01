@@ -8,11 +8,11 @@ Running the PokéBot on your own machine is easy. You will need a Windows enviro
 
 1. First, clone this repository (or download and unzip it) to your computer.
 
-2. Download the [BizHawk 1.9.4](http://sourceforge.net/projects/bizhawk/files/BizHawk/BizHawk-1.9.4.zip/download) emulator or newer version and extract the ZIP file anywhere you like to “install” it.
+2. Download the [BizHawk](https://github.com/TASVideos/BizHawk/releases/) emulator and extract the ZIP file anywhere you like to “install” it.
 
-3. Run [the BizHawk prerequisites installer](http://sourceforge.net/projects/bizhawk/files/Prerequisites/bizhawk_prereqs_v1.1.zip/download), which should update a C++ distributable needed by BizHawk.
+3. Run [the BizHawk prerequisites installer](https://github.com/TASVideos/BizHawk-Prereqs/releases), which should update a C++ distributable needed by BizHawk.
 
-4. Procure a ROM file of Pokémon Emerald english version (japan might not work and you should personally own the game).
+4. Procure a ROM file of Pokémon Emerald english version (Japan might not work and you should personally own the game).
 
 5. Open the ROM file with BizHawk (drag the `.gba` file onto EmuHawk), and Pokémon should start up. Otherwise select Open ROM in EmuHawk.
 

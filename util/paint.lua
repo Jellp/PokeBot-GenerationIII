@@ -37,11 +37,6 @@ function Paint.draw(currentMap)
 		local scl_def = Pokemon.index(tidx, "special_defense")
 		drawText(0, 90, attack.." | "..defense.." | "..speed.." | "..scl_att.." | "..scl_def)
 	end]]
-	local enc = " encounter"
-	if encounters > 1 then
-		enc = enc.."s"
-	end
-	drawText(0, 115, encounters..enc)
 	return true
 end
 

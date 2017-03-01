@@ -11,6 +11,13 @@ SystemID GBA
 0244AC	b	u	0	EWRAM	BattleMenuCursor
 0244B0	b	u	0	EWRAM	MoveMenuCursor
 0	S	_	1		
+0240DC	b	u	0	EWRAM	Opponent ID
+024106	b	u	0	EWRAM	Opponent lv
+0240FD	b	u	0	EWRAM	Opponent type 1
+0240FE	b	u	0	EWRAM	Opponent type 2
+024104	w	u	0	EWRAM	Opponent HP
+024108	w	u	0	EWRAM	Opponent maxHP
+0	S	_	1		
 0240AC	b	u	0	EWRAM	HP current pokemon
 0240B0	b	u	0	EWRAM	maxHP current pokemon
 0	S	_	1		

@@ -209,75 +209,68 @@ function Control.encounters()
 end
 
 function Control.encounter(battlemenu)
-	if battlemenu > 5 then
-		local wildBattle = false
-		local canrun = Memory.value("battle", "canrun")
-		if canrun == 0 then
-			wildBattle = true
-		elseif canrun == 3 then 
-			--Mudkip intro battle, we can mash A for this one :D
-			Input.press("A", 2)
+	local wildBattle = false
+	local canrun = Memory.value("battle", "canrun")
+	if canrun == 0 then
+		wildBattle = true
+	elseif canrun == 3 then 
+		--Mudkip intro battle, we can mash A for this one :D
+		Input.press("A", 2)
+	end
+	--[[local isCritical
+	local battleMenu = Memory.value("battle", "menu")
+	if battleMenu == 94 then
+		isCritical = false
+		Control.missed = false
+	elseif Memory.double("battle", "our_hp") == 0 then
+		if Memory.value("battle", "critical") == 1 then
+			isCritical = true
 		end
-		--[[local isCritical
-		local battleMenu = Memory.value("battle", "menu")
-		if battleMenu == 94 then
-			isCritical = false
-			Control.missed = false
-		elseif Memory.double("battle", "our_hp") == 0 then
-			if Memory.value("battle", "critical") == 1 then
-				isCritical = true
-			end
-		elseif not Control.missed then
-			local turnMarker = Memory.value("battle", "our_turn")
-			if turnMarker == 100 or turnMarker == 128 then
-				local isMiss = Memory.value("battle", "miss") == 1
-				if isMiss then
-					if not Control.ignoreMiss and Battle.accurateAttack and Memory.value("battle", "accuracy") == 7 then
-						Bridge.chat("gen 1 missed :( (1 in 256 chance)")
-					end
-					Control.missed = true
+	elseif not Control.missed then
+		local turnMarker = Memory.value("battle", "our_turn")
+		if turnMarker == 100 or turnMarker == 128 then
+			local isMiss = Memory.value("battle", "miss") == 1
+			if isMiss then
+				if not Control.ignoreMiss and Battle.accurateAttack and Memory.value("battle", "accuracy") == 7 then
+					Bridge.chat("gen 1 missed :( (1 in 256 chance)")
 				end
+				Control.missed = true
 			end
 		end
-		if isCritical ~= nil and isCritical ~= Control.criticaled then
-			Control.criticaled = isCritical
-		end]]
-		if wildBattle then
-			local opponentHP = Memory.double("battle", "opponent_hp")
-			if not Control.inBattle then
-				Control.escaped = false
-				if opponentHP > 0 then
-					Control.killedCatch = false
-					Control.inBattle = true
-					encounters = encounters + 1
-					Paint.wildEncounters(encounters)
-					Bridge.encounter()
-					--if Control.moonEncounters then
-					--	Control.moonEncounters = Control.moonEncounters + 1
-					--end
-				end
-			else
-				--if opponentHP == 0 and shouldCatch and not Control.killedCatch then
-				--if opponentHP == 0 and shouldCatch then
-					--local gottaCatchEm = {"pidgey", "spearow", "paras", "oddish"}
-					--local opponent = Battle.opponent()
-					--for i,catch in ipairs(gottaCatchEm) do
-					--	if opponent == catch then
-					--		if not Pokemon.inParty(catch) then
-					--			Bridge.chat("accidentally killed "..Utils.capitalize(catch).." with a "..(isCritical and "critical" or "high damage range").." :(")
-					--			Control.killedCatch = true
-					--		end
-					--		break
-					--	end
-					--end
+	end
+	if isCritical ~= nil and isCritical ~= Control.criticaled then
+		Control.criticaled = isCritical
+	end]]
+	if wildBattle then
+		local opponentHP = Memory.double("battle", "opponent_hp")
+		if not Control.inBattle then
+			Control.escaped = false
+			if opponentHP > 0 then
+				Control.killedCatch = false
+				Control.inBattle = true
+				encounters = encounters + 1
+				Paint.wildEncounters(encounters)
+				Bridge.encounter()
+				--if Control.moonEncounters then
+				--	Control.moonEncounters = Control.moonEncounters + 1
 				--end
 			end
+		else
+			--if opponentHP == 0 and shouldCatch and not Control.killedCatch then
+			--if opponentHP == 0 and shouldCatch then
+				--local gottaCatchEm = {"pidgey", "spearow", "paras", "oddish"}
+				--local opponent = Battle.opponent()
+				--for i,catch in ipairs(gottaCatchEm) do
+				--	if opponent == catch then
+				--		if not Pokemon.inParty(catch) then
+				--			Bridge.chat("accidentally killed "..Utils.capitalize(catch).." with a "..(isCritical and "critical" or "high damage range").." :(")
+				--			Control.killedCatch = true
+				--		end
+				--		break
+				--	end
+				--end
+			--end
 		end
-	elseif Control.inBattle then
-		if Memory.value("battle", "battle_turns") == 0 then
-			Control.escaped = true
-		end
-		Control.inBattle = false
 	end
 end
 

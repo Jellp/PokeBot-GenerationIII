@@ -819,7 +819,7 @@ name = 'Dragon Rage',
 move_type = 'Dragon',
 special = true,
 max_pp = 10,
-power = ,
+power = 0,
 accuracy = 100,
 },
 

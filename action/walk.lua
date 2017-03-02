@@ -22,7 +22,7 @@ local customDir = 1
 
 local function setPath(index, region)
 	print("Set path: "..index.." in region "..region.."")
-	if region ~= 510 then --Region 510 is a, eh, glitched region?
+	if region ~= 510 and region ~= 0 then --Region 510 is a, eh, glitched region?
 		pathIdx = index
 		stepIdx = 2
 		currentMap = region

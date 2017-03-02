@@ -32,7 +32,7 @@ PAINT_ON    = true 				-- Display contextual information while the bot runs
 --Names Settings 
 PLAYER_NAME = "B"			-- Player name
 RIVAL_NAME = "B"			-- Rival name
-MUDKIP_NAME = "MUDKIPZ"			-- Set Mudkip name
+MUDKIP_NAME = "B"			-- Set Mudkip name
 
 --NAMES SETTINGS TIPS : 
 --		- Can use up to 7 letter ingame
@@ -207,22 +207,16 @@ while true do
 			end
 			local Cantmove = Memory.value("player", "cantmove")
 			local battlemenu = Memory.value("battle", "menu")
-			local battleState = Memory.value("game", "battle") --3/4 variabelen om te zien of we een battle hebben, CanMove (0F2C), Battle - menu (>5) (5D60), CanFlee (2) (5DF0), Battling (090E).
+			local battleState = Memory.value("game", "battle") 
 			if battleState == 1 or battlemenu > 5 and battleState == 1 then --We b battlin, battlemenu can go up to >=45
-				--print("TAKING OVER A BATTLE")
 				Control.encounter(battlemenu)
 				--local curr_hp = Pokemon.index(0, "hp")
 				--if curr_hp == 0 and not Control.canDie() and Pokemon.index(0) > 0 then
 				--	Strategies.death(currentMap)
 			elseif Walk.strategy then
-			--if Walk.strategy then
 				if Strategies.execute(Walk.strategy) then
 					Walk.traverse(currentMap)
 				end
-			--elseif battleState > 0 then
-			--	if not Control.shouldCatch(partySize) then
-			--		Battle.automate()
-			--	end
 			elseif Textbox.handle() then
 				Walk.traverse(currentMap)
 			end

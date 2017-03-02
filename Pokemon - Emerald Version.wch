@@ -21,7 +21,7 @@ SystemID GBA
 0240AC	b	u	0	EWRAM	HP current pokemon
 0240B0	b	u	0	EWRAM	maxHP current pokemon
 0	S	_	1		
-006354	d	u	0	EWRAM	Lv first pokemon
+024540	b	u	0	EWRAM	Lv first pokemon
 024542	b	u	0	EWRAM	HP first pokemon
 024544	b	u	0	EWRAM	maxHP first pokemon
 024546	b	u	0	EWRAM	Att first pokemon
@@ -30,7 +30,7 @@ SystemID GBA
 02454E	b	u	0	EWRAM	S.def first pokemon
 02454A	b	u	0	EWRAM	Speed first pokemon
 0	S	_	1		
-006364	d	u	0	EWRAM	Lv second pokemon
+0245A4	b	u	0	EWRAM	Lv second pokemon
 0245A6	b	u	0	EWRAM	HP second pokemon
 0245A8	b	u	0	EWRAM	maxHP second pokemon
 0245AA	b	u	0	EWRAM	Att second pokemon

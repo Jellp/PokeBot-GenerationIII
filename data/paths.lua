@@ -31,7 +31,22 @@ local paths = {
 	-- Inside lab
 	{5, {13, 12}, {s="speak"}, {13, 20}}, --Todo fix naming
 	-- Outside again, strange place
-	{9, {14, 21}}
+	{9, {14, 24}, {17, 24}, {17, 6}, {17, 26}, {17, 21}, {14, 21}, {14, 17}, 
+	{22, 17}, {22, 12}, {17, 12}, {17, 6}, {17, 26}, {17, 6}, 
+	{17, 28}, {17, 20}, {21, 20}, {21, 14}, {16, 14}, {16, 13}, {12, 13}, 
+	{12, 10}, {16, 10}, {s="speak"} --[[Check HP and if attack is 15 or more afterwards]], {16, 29}, {16, 7}, {16, 29}, {16, 7}, 
+	{17, 24}, {17, 29}, {17, 7}, {17, 24}, {14, 24}, {14, 23}}, 
+	-- Blah blah pokedex here go get me some pokemon blah blah.
+	{5, {13, 12}, {s="speak"}, {13, 20}, {13, 20}},
+	-- Yes mom thanks for the shoes now off to Petalburg city
+	{9, {14, 24}, {17, 24}, {17, 17}, {21, 17}, {s="setDirection",dir="Up"}, 
+	{s="speak"}, {18, 17}, {18, 6}, {18, 26}, {18, 21}, {14, 21}, {22, 17}, --At this point I figured out I could do the path with half the arguments I give.
+	{16, 12}, {16, 6}, {16, 26}, {6, 18}, {56, 18}, {43, 18}, {41, 21}, 
+	{s="speak"}, {26, 23}, {25, 17}, {31, 10}, {s="setDirection",dir="Up"}, 
+	{s="pickfruit"}, {18, 10}, {14, 13}, {6, 15}, 
+	{36, 25}, {27, 24}, {27, 23}}, 
+	-- Pokecenter, deposit poochena or zigzag if caught or go back out. (And use it to heal if depositing)
+	{12, {14, 15}}
 }
 
 --Remake Path for Girl

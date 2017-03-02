@@ -14,10 +14,10 @@ local memoryNames = {
 		row = 0x20660,
 		mode = 0x206A4,
 	},
-	--[[inventory = {
-		item_count = 0x1892,
-		item_base = 0x1893,
-	},]]
+	inventory = {
+		--item_count = 0x1892,
+		--item_base = 0x1893,
+	},
 	menu = {
 		row = 0x5E0A,
 		input_row = 0x5E08,
@@ -30,7 +30,7 @@ local memoryNames = {
 		--item_row_size = 0x110D,
 		
 		column = 0x3CE5D,
-		current = 0x0820,		--
+		current = 0x0820, 
 		--size = 0x0FA3,
 		main_current = 0x5E00,
 		option_current = 0x0859,
@@ -48,13 +48,14 @@ local memoryNames = {
 	player = {
 		--name = 0x147D,
 		--name2 = 0x1493,
+		cantmove = 0x0F2C,
 		moving = 0x37593,		--1 = moving
 		facing = 0x37368,		--17=S // 34=N // 51=W // 68=E
 		--repel = 0x1CA1,
 		--party_size = 0x1CD7,
 	},
 	game = {
-		battle = 0x0F2C,		--1=wild 2=trainer
+		battle = 0x090E, 
 		ingame = 0x0E08,
 		textbox = 0x0E40,
 		--textbox = 0x5DF0,
@@ -72,9 +73,10 @@ local memoryNames = {
 	},]]
 	battle = {
 		text = 0x24068,				--
-		menu = 0x5D60,				--106=106(att) // 186=94(main) // 128=233(item) // 145=224(pkmon)
-		--menuX = 0x0FAA,				--used for battle menu Row-X
-		--menuY = 0x0FA9,				--used for battle menu Row-Y
+		menu = 0x5D60,				--253(att) // 137(main) // 225(item) // 41(pkmon)
+		canrun = 0x5DF0,				--0 = yes, 2 = no, anything else is a special snowflake.
+		main_menu = 0x244AC,				--cursor, 0 = top left, 1 = top right,
+		move_menu = 0x244B0,				--2 = bottom left, 3 = bottom right.
 		--battle_turns = 0x06DD,		--USED FOR DSUM ESCAPE??
 		
 		opponent_id = 0x240DC,		--or 0x1204??
@@ -182,10 +184,11 @@ end
 
 function Memory.value(section, key)
 	local memoryAddress = memoryNames[section]
+	local res
 	if key then
-		memoryAddress = memoryAddress[key]
+		res = memoryAddress[key]
 	end
-	return raw(memoryAddress)
+	return raw(res)
 end
 
 function Memory.getAddress(section, key)

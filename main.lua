@@ -30,9 +30,9 @@ CUSTOM_SEED = nil		 		-- Set to a known seed to replay it, or leave nil for rand
 PAINT_ON    = true 				-- Display contextual information while the bot runs
 
 --Names Settings 
-PLAYER_NAME = "DOULIKE"			-- Player name
+PLAYER_NAME = "B"			-- Player name
 RIVAL_NAME = "B"			-- Rival name
-MUDKIP_NAME = "MUDKIPZ"			-- Set Mudkip name
+MUDKIP_NAME = "B"			-- Set Mudkip name
 
 --NAMES SETTINGS TIPS : 
 --		- Can use up to 7 letter ingame
@@ -205,20 +205,18 @@ while true do
 				Bridge.liveSplit()
 				running = true
 			end
-			local battleState = Memory.value("game", "battle")
-			Control.encounter(battleState)
-			--local curr_hp = Pokemon.index(0, "hp")
-			--if curr_hp == 0 and not Control.canDie() and Pokemon.index(0) > 0 then
-			--	Strategies.death(currentMap)
-			--elseif Walk.strategy then
-			if Walk.strategy then
+			local Cantmove = Memory.value("player", "cantmove")
+			local battlemenu = Memory.value("battle", "menu")
+			local battleState = Memory.value("game", "battle") 
+			if battleState == 1 or battlemenu > 5 and battleState == 1 then --We b battlin, battlemenu can go up to >=45
+				Control.encounter(battlemenu)
+				--local curr_hp = Pokemon.index(0, "hp")
+				--if curr_hp == 0 and not Control.canDie() and Pokemon.index(0) > 0 then
+				--	Strategies.death(currentMap)
+			elseif Walk.strategy then
 				if Strategies.execute(Walk.strategy) then
 					Walk.traverse(currentMap)
 				end
-			--elseif battleState > 0 then
-			--	if not Control.shouldCatch(partySize) then
-			--		Battle.automate()
-			--	end
 			elseif Textbox.handle() then
 				Walk.traverse(currentMap)
 			end

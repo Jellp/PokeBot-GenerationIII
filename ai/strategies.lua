@@ -306,16 +306,32 @@ Strategies.functions = {
 		return true
 	end, 
 	
+	pickfruit = function()
+		local cantmove = Memory.value("player", "cantmove")
+		if not status.tempDir then
+			Input.press("A", 2)
+			status.tempDir = true
+		elseif cantmove == 1 then 
+			Input.press("A", 2)
+		else 
+			status.tempDir = false
+			return true
+		end
+	end, 
+	
 	IHeardYouLikeMudkip = function()
 		
 		local choice = Memory.value("menu", "starter")
+		local current = Memory.value("menu", "current")
 		
 		if Strategies.initialize() then
 			status.tempDir = false
 		end
 		if Textbox.isActive() then
+
 			status.tempDir = false
 			return true
+
 		else
 			if status.tempDir and Textbox.isActive() then --This would mean the battle should have started?
 				status.tempDir = false
@@ -324,8 +340,6 @@ Strategies.functions = {
 				Input.press("Right", 2)
 			elseif status.tempDir and choice == 2 then
 				Input.press("A", 2)
-				status.tempDir = false -- Assuming we selected correctly, I sure hope so. >_>
-				return true
 			else 
 				Input.press("A", 2)
 				status.tempDir = true --Kinda just assume we've started the chat.

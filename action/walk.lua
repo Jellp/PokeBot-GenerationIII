@@ -22,7 +22,7 @@ local customDir = 1
 
 local function setPath(index, region)
 	print("Set path: "..index.." in region "..region.."")
-	if region ~= 510 then --Region 510 is a, eh, glitched region?
+	if region ~= 510 and region ~= 0 then --Region 510 is a, eh, glitched region?
 		pathIdx = index
 		stepIdx = 2
 		currentMap = region
@@ -76,7 +76,7 @@ function step(dx, dy, slow)
 		return true
 	end
 	--Due to some Emerald mechanics I assume, I'm going to need to check if our coordinates warped without changing region.
-	if px + py > px2 + py2 + 3 then --If you get moved 3 or more coordinates since last check we assume a warp.
+	if px + py > px2 + py2 + 3 or px + py + 3 < px2 + py2 then --If you get moved 3 or more coordinates since last check we assume a warp.
 		print("Warped!")
 		print("From "..px2..", "..py2.." to "..px..", "..py)
 		px2 = px

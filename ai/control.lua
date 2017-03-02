@@ -19,6 +19,17 @@ local shouldCatch, attackIdx
 local extraEncounter, maxEncounters
 local battleYolo
 
+local needslave = {
+	rocksmash = true,
+	teleport = true,
+	fly = true,
+}
+Control.needslave = needslave
+
+local custom = { } -- Just some dummy variable(s) in order to save some things, one is used to take on some wild pokes.
+custom[1] = 0
+Control.custom = custom
+
 Control.areaName = "Unknown"
 Control.moonEncounters = nil
 Control.getMoonExp = true
@@ -215,32 +226,9 @@ function Control.encounter(battlemenu)
 		wildBattle = true
 	elseif canrun == 3 then 
 		--Mudkip intro battle, we can mash A for this one :D
-		Input.press("A", 2)
+		Input.press("A")
 	end
-	--[[local isCritical
-	local battleMenu = Memory.value("battle", "menu")
-	if battleMenu == 94 then
-		isCritical = false
-		Control.missed = false
-	elseif Memory.double("battle", "our_hp") == 0 then
-		if Memory.value("battle", "critical") == 1 then
-			isCritical = true
-		end
-	elseif not Control.missed then
-		local turnMarker = Memory.value("battle", "our_turn")
-		if turnMarker == 100 or turnMarker == 128 then
-			local isMiss = Memory.value("battle", "miss") == 1
-			if isMiss then
-				if not Control.ignoreMiss and Battle.accurateAttack and Memory.value("battle", "accuracy") == 7 then
-					Bridge.chat("gen 1 missed :( (1 in 256 chance)")
-				end
-				Control.missed = true
-			end
-		end
-	end
-	if isCritical ~= nil and isCritical ~= Control.criticaled then
-		Control.criticaled = isCritical
-	end]]
+	
 	if wildBattle then
 		local opponentHP = Memory.double("battle", "opponent_hp")
 		if not Control.inBattle then
@@ -248,29 +236,50 @@ function Control.encounter(battlemenu)
 			if opponentHP > 0 then
 				Control.killedCatch = false
 				Control.inBattle = true
-				encounters = encounters + 1
-				Paint.wildEncounters(encounters)
-				Bridge.encounter()
-				--if Control.moonEncounters then
-				--	Control.moonEncounters = Control.moonEncounters + 1
-				--end
 			end
 		else
-			--if opponentHP == 0 and shouldCatch and not Control.killedCatch then
-			--if opponentHP == 0 and shouldCatch then
-				--local gottaCatchEm = {"pidgey", "spearow", "paras", "oddish"}
-				--local opponent = Battle.opponent()
-				--for i,catch in ipairs(gottaCatchEm) do
-				--	if opponent == catch then
-				--		if not Pokemon.inParty(catch) then
-				--			Bridge.chat("accidentally killed "..Utils.capitalize(catch).." with a "..(isCritical and "critical" or "high damage range").." :(")
-				--			Control.killedCatch = true
-				--		end
-				--		break
-				--	end
-				--end
+			
+			
+			
+			local opponent = Memory.value("battle", "opponent_id")
+			local plscatch = false
+			local plsfight = false
+			
+			--Needs pokeball check!
+			--if Control.needslave.rocksmash and opponent == 30 then
+			--	plscatch = true
+			--elseif Control.needslave.teleport and opponent == 9000 then --Still gotta find abra
+			--	plscatch = true
+			--elseif Control.needslave.fly and opponent == 9000 then --Still gotta find fly slave ids
+			--	plscatch = true
+			--elseif Control.custom[1] > 0 and opponent == 9000 then --still gotta find nincada?
+			--	plsfight = true
 			--end
+			
+			if not plscatch then 
+				--Flee
+				
+				if battlemenu == 137 then
+					local cursor = Memory.value("battle", "main_menu")
+					if cursor == 0 or cursor == 2 then 
+						Input.press("Right")
+					elseif cursor == 1 then 
+						Input.press("Down")
+					else 
+						Input.press("A")
+					end
+				else 
+					Input.press("B", 2)
+				end
+				
+			end
+			
 		end
+	elseif canrun ~= 3 then 
+		
+		--TODO Trainer battle
+		Input.press("A") --Placeholder for now 
+		
 	end
 end
 

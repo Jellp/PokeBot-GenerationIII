@@ -306,6 +306,19 @@ Strategies.functions = {
 		return true
 	end, 
 	
+	pickfruit = function()
+		local cantmove = Memory.value("player", "cantmove")
+		if not status.tempDir then
+			Input.press("A", 2)
+			status.tempDir = true
+		elseif cantmove == 1 then 
+			Input.press("A", 2)
+		else 
+			status.tempDir = false
+			return true
+		end
+	end, 
+	
 	IHeardYouLikeMudkip = function()
 		
 		local choice = Memory.value("menu", "starter")

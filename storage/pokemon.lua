@@ -5,33 +5,25 @@ local Input = require "util.input"
 local Memory = require "util.memory"
 local Menu = require "util.menu"
 
+local team = { }
+team[1] = 1337
+
 local pokeIDs = {
-	pidgey = 16,
-	spearow = 21,
-	rattata = 19,
-	nidoranF = 29,
-	nidoranM = 32,
 	
-	chikorita = 152,
-	bayleef = 153,
-	meganium = 154,
+	mudkip = 1337, --Hey look a made up number!
+	poochyena = 30, 
+	taillow = 48,
+	zigzagoon = 32,
+	nincada = 45, 
+	abra = 63,
 	
-	cyndaquil = 155,
-	quilava = 156,
-	typhlosion = 157,
 	
-	totodile = 158,
-	croconaw = 159,
-	feraligatr = 160,
-	
-	sentret = 161,
-	furret = 162,
-	hoothoot = 163,
 	marill = 183,
-	azumarill = 184,
-	sudowoodo = 185,
-	politoed = 186,
-	hoppip = 187,
+	silcoon = 35, 
+	lotad = 39, 
+	seedot = 42, 
+	whismur = 114, 
+	
 }
 
 local moveList = {

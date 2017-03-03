@@ -17,6 +17,7 @@ SystemID GBA
 0240FE	b	u	0	EWRAM	Opponent type 2
 024104	w	u	0	EWRAM	Opponent HP
 024108	w	u	0	EWRAM	Opponent maxHP
+02418C	b	u	0	EWRAM	Second opponent
 0	S	_	1		
 0240AC	b	u	0	EWRAM	HP current pokemon
 0240B0	b	u	0	EWRAM	maxHP current pokemon

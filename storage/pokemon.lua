@@ -6,11 +6,14 @@ local Memory = require "util.memory"
 local Menu = require "util.menu"
 
 local team = { }
-team[1] = 1337
+team[1] = 258
+
+local pokes = 1
 
 local pokeIDs = {
 	
-	mudkip = 1337, --Hey look a made up number!
+	--These IDs are the ones I need I think.
+	mudkip = 258, --Couldn't find mudkip's RAM number.
 	poochyena = 30, 
 	taillow = 48,
 	zigzagoon = 32,
@@ -238,6 +241,20 @@ end]]
 	local curr_hp, max_hp = index(0, "hp"), index(0, "max_hp")
 	return curr_hp / max_hp <= 0.2
 end]]
+
+function Pokemon.caught(pokeID) --Just call whenever you catch a pokemon.
+	team[pokes + 1] = pokeID
+	pokes = pokes + 1
+end
+
+function Pokemon.has(pokeID)
+   for i, val in ipairs(team) do
+      if val == pokeID then 
+         return true
+      end
+   end
+   return false
+end
 
 function Pokemon.use(move)
 	--local main = Memory.value("menu", "main")

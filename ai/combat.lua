@@ -61,6 +61,7 @@ local function calcDamage(move, attacker, defender, rng)
 	if move.fixed then
 		return move.fixed, move.fixed
 	end
+	
 	--[[if move.power == 0 or isDisabled(move.id) then
 		return 0, 0
 	end
@@ -81,25 +82,37 @@ local function calcDamage(move, attacker, defender, rng)
 	else
 		attFactor, defFactor = attacker.att, defender.def
 	end
-	local damage = floor(floor(floor(2 * attacker.level / 5 + 2) * math.max(1, attFactor) * move.power / math.max(1, defFactor)) / 50) + 2
-
+	
+	
+	local damage = floor((((2 * attacker.level / 5 + 2) * move.power * attFactor / defFactor) / 50) + 2) --* math.max(1, attFactor) * move.power / math.max(1, defFactor)) / 50) + 2
+	
+	--Damage modifiers
+	--Weather:
+	--TODO Need to find weather hex adress
+	
+	
+	--STAB
 	if move.move_type == attacker.type1 or move.move_type == attacker.type2 then
 		damage = floor(damage * 1.5) -- STAB
 	end
+	
+	--Type
+	local dmgtype = damageMultiplier[move.move_type]
+	damage = damage * dmgtype[defender.type1] * dmgtype[defender.type2]
+	
+	--Burn
+	--TODO Need to find status hex adress
+	
+	
+	
 
-	local dmp = damageMultiplier[move.move_type]
-	local typeEffect1, typeEffect2 = dmp[defender.type1], dmp[defender.type2]
-	if defender.type1 == defender.type2 then
-		typeEffect2 = 1
-	end
 	damage = floor(damage * typeEffect1 * typeEffect2)
 	if move.multiple then
 		damage = damage * move.multiple
 	end
-	if rng then
-		return damage, damage
-	end
-	return floor(damage * 217 / 255), damage
+	
+	
+	return damage
 end
 
 local function getOpponentType(ty)

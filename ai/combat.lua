@@ -61,19 +61,9 @@ local function calcDamage(move, attacker, defender, rng)
 	if move.fixed then
 		return move.fixed, move.fixed
 	end
-	
-	--[[if move.power == 0 or isDisabled(move.id) then
-		return 0, 0
-	end
-	if move.power > 9000 then
-		if Memory.value("battle", "x_accuracy") == 1 and defender.speed < attacker.speed then
-			return 9001, 9001
-		end
-		return 0, 0
-	end
-	if move.name == "Thrash" and Combat.disableThrash then
-		return 0, 0
-	end]]
+
+	-- Check if move is disabled?
+	-- Is that even in the route I want to take?
 
 	local attFactor, defFactor
 	if move.special then
@@ -82,36 +72,38 @@ local function calcDamage(move, attacker, defender, rng)
 	else
 		attFactor, defFactor = attacker.att, defender.def
 	end
-	
-	
+
+
 	local damage = floor((((2 * attacker.level / 5 + 2) * move.power * attFactor / defFactor) / 50) + 2) --* math.max(1, attFactor) * move.power / math.max(1, defFactor)) / 50) + 2
-	
+
 	--Damage modifiers
 	--Weather:
 	--TODO Need to find weather hex adress
-	
-	
+
+
 	--STAB
 	if move.move_type == attacker.type1 or move.move_type == attacker.type2 then
 		damage = floor(damage * 1.5) -- STAB
 	end
-	
+
+
 	--Type
 	local dmgtype = damageMultiplier[move.move_type]
 	damage = damage * dmgtype[defender.type1] * dmgtype[defender.type2]
-	
+
+
 	--Burn
 	--TODO Need to find status hex adress
-	
-	
-	
 
+	--[[
+	--Move effectiveness?
 	damage = floor(damage * typeEffect1 * typeEffect2)
 	if move.multiple then
 		damage = damage * move.multiple
 	end
-	
-	
+	]]
+
+
 	return damage
 end
 

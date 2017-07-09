@@ -11,10 +11,10 @@ SystemID GBA
 0244AC	b	u	0	EWRAM	BattleMenuCursor
 0244B0	b	u	0	EWRAM	MoveMenuCursor
 5EA4	b	u	0	IWRAM	Menu active?
-045E4A	b	u	0	Combined WRAM	Current_Selected_Backpack_Index
-0063D8	b	u	0	Combined WRAM	Backpack in item menu
-03CE60	b	u	0	Combined WRAM	Backpack_Selected_Index?
-03CD92	b	u	0	Combined WRAM	Menu_selected
+045E4A	b	u	0	EWRAM	Current_Selected_Backpack_Index
+0063D8	b	u	0	EWRAM	Backpack in item menu
+03CE60	b	u	0	EWRAM	Backpack_Selected_Index?
+03CD92	b	u	0	EWRAM	Menu_selected
 0	S	_	1		
 0240DC	b	u	0	EWRAM	Opponent ID
 024106	b	u	0	EWRAM	Opponent lv

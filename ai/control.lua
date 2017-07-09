@@ -40,7 +40,7 @@ Control.yolo = false
 end]]
 
 local controlFunctions = {
-	
+
 	a = function(data)
 		Control.areaName = data.a
 		return true
@@ -74,7 +74,9 @@ local controlFunctions = {
 	end,
 
 	-- EXP
-	
+
+	-- TODO check if grinding is required on route, mudkip might be too stronk!
+
 	--[[viridianExp = function()
 		minExp = 210
 		shouldFight = {{name="rattata",lvl={2,3}}, {name="pidgey",lvl={2}}}
@@ -84,14 +86,16 @@ local controlFunctions = {
 		minExp = 210
 		shouldFight = {{name="rattata",lvl={2,3}}, {name="pidgey",lvl={2,3}}}
 	end,
-	
+
 	nidoranBackupExp = function()
 		minExp = 210
 		shouldFight = {{name="rattata"}, {name="pidgey"}, {name="nidoran"}, {name="nidoranf",lvl={2}}}
 	end,
 
 	-- CATCH
-	
+
+	-- TODO check how this works!
+
 	catchNidoran = function()
 		shouldCatch = {{name="nidoran",lvl={3,4}}, {name="spearow"}}
 	end,
@@ -224,11 +228,11 @@ function Control.encounter(battlemenu)
 	local canrun = Memory.value("battle", "canrun")
 	if canrun == 0 then
 		wildBattle = true
-	elseif canrun == 3 then 
+	elseif canrun == 3 then
 		--Mudkip intro battle, we can mash A for this one :D
 		Input.press("A")
 	end
-	
+
 	if wildBattle then
 		local opponentHP = Memory.double("battle", "opponent_hp")
 		if not Control.inBattle then
@@ -238,13 +242,13 @@ function Control.encounter(battlemenu)
 				Control.inBattle = true
 			end
 		else
-			
-			
-			
+
+
+
 			local opponent = Memory.value("battle", "opponent_id")
 			local plscatch = false
 			local plsfight = false
-			
+
 			--Needs pokeball check!
 			--if Control.needslave.rocksmash and opponent == 30 then
 			--	plscatch = true
@@ -255,31 +259,31 @@ function Control.encounter(battlemenu)
 			--elseif Control.custom[1] > 0 and opponent == 9000 then --still gotta find nincada?
 			--	plsfight = true
 			--end
-			
-			if not plscatch then 
+
+			if not plscatch then
 				--Flee
-				
+
 				if battlemenu == 137 then
 					local cursor = Memory.value("battle", "main_menu")
-					if cursor == 0 or cursor == 2 then 
+					if cursor == 0 or cursor == 2 then
 						Input.press("Right")
-					elseif cursor == 1 then 
+					elseif cursor == 1 then
 						Input.press("Down")
-					else 
+					else
 						Input.press("A")
 					end
-				else 
+				else
 					Input.press("B", 2)
 				end
-				
+
 			end
-			
+
 		end
-	elseif canrun ~= 3 then 
-		
+	elseif canrun ~= 3 then
+
 		--TODO Trainer battle
-		Input.press("A") --Placeholder for now 
-		
+		Input.press("A") --Placeholder for now
+
 	end
 end
 

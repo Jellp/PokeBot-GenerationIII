@@ -29,12 +29,12 @@ STREAMING_MODE = false			-- Enable Streaming mode
 CUSTOM_SEED = nil		 		-- Set to a known seed to replay it, or leave nil for random runs
 PAINT_ON    = true 				-- Display contextual information while the bot runs
 
---Names Settings 
+--Names Settings
 PLAYER_NAME = "B"			-- Player name
 RIVAL_NAME = "B"			-- Rival name
 MUDKIP_NAME = "B"			-- Set Mudkip name
 
---NAMES SETTINGS TIPS : 
+--NAMES SETTINGS TIPS :
 --		- Can use up to 7 letter ingame
 --		- Upper, Lower case and Number allowed
 --		- Specials Characters :
@@ -124,7 +124,7 @@ local function resetAll()
 	running = false
 	Utils.reset()
 	-- client.speedmode = 200
-	
+
 	if CUSTOM_SEED then
 		Strategies.seed = CUSTOM_SEED
 		p("RUNNING WITH A FIXED SEED ("..Strategies.seed.."), every run will play out identically!", true)
@@ -177,7 +177,7 @@ while true do
 		Input.clear()
 		previousMap = currentMap
 	end
-	
+
 	--if Strategies.frames then
 		--if Memory.value("game", "battle") == 0 then
 	--		Strategies.frames = Strategies.frames + 1
@@ -206,10 +206,10 @@ while true do
 				running = true
 			end
 			local Cantmove = Memory.value("player", "cantmove")
-			local battlemenu = Memory.value("battle", "menu")
-			local battleState = Memory.value("game", "battle") 
-			if battleState == 1 or battlemenu > 5 and battleState == 1 then --We b battlin, battlemenu can go up to >=45
-				Control.encounter(battlemenu)
+			--local battlemenu = Memory.value("battle", "menu")
+			local battleState = Memory.value("game", "battle")
+			if battleState == 1 then --We b battlin, battlemenu can go up to >=45
+				Control.encounter()
 				--local curr_hp = Pokemon.index(0, "hp")
 				--if curr_hp == 0 and not Control.canDie() and Pokemon.index(0) > 0 then
 				--	Strategies.death(currentMap)

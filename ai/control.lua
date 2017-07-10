@@ -223,13 +223,15 @@ function Control.encounters()
 	return encounters
 end
 
-function Control.encounter(battlemenu)
+function Control.encounter()
 	local wildBattle = false
+	local battlemenu = Memory.value("battle", "menu")
 	local canrun = Memory.value("battle", "canrun")
 	if canrun == 0 then
 		wildBattle = true
 	elseif canrun == 3 then
-		--Mudkip intro battle, we can mash A for this one :D
+		--Mudkip intro battle, we can mash A for this one, might want
+		--to replace this with the AI regardless?
 		Input.press("A")
 	end
 
@@ -243,24 +245,17 @@ function Control.encounter(battlemenu)
 			end
 		else
 
-
-
 			local opponent = Memory.value("battle", "opponent_id")
 			local plscatch = false
 			local plsfight = false
 
 			--Needs pokeball check!
-			--if Control.needslave.rocksmash and opponent == 30 then
-			--	plscatch = true
-			--elseif Control.needslave.teleport and opponent == 9000 then --Still gotta find abra
-			--	plscatch = true
-			--elseif Control.needslave.fly and opponent == 9000 then --Still gotta find fly slave ids
-			--	plscatch = true
-			--elseif Control.custom[1] > 0 and opponent == 9000 then --still gotta find nincada?
-			--	plsfight = true
-			--end
 
-			if not plscatch then
+
+			--Need to check if I want to fight?
+			--Might want to let that depend on something else
+
+			if not plscatch and not plsfight then
 				--Flee
 
 				if battlemenu == 137 then
@@ -276,10 +271,16 @@ function Control.encounter(battlemenu)
 					Input.press("B", 2)
 				end
 
+			else
+
+				-- Fight!
+
 			end
 
 		end
-	elseif canrun ~= 3 then
+	else
+
+		--We can't run, so let's battle!
 
 		--TODO Trainer battle
 		Input.press("A") --Placeholder for now

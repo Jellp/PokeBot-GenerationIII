@@ -155,38 +155,32 @@ end
 -- HANDLE
 
 function Battle.run()
-	if Memory.double("battle", "opponent_hp") < 1 then
-		Input.cancel()
-	--elseif Memory.value("battle", "menu") ~= 94 then
-	elseif Memory.value("battle", "menu") ~= 186 then
-		--if Memory.value("menu", "text_length") == 127 then
-		--	Input.press("B")
-		--else
-			Input.press("B", 2)
-			--Input.cancel()
-		--end
-	elseif Memory.value("battle", "menu") == 186 then
-	--elseif Textbox.handle() then
-		--local rowSelected = Memory.value("battle", "menuY")
-		--local columnSelected = Memory.value("battle", "menuX")
-		--local selected = Memory.value("menu", "selection")
-		--if selected == 239 then
-		--if rowSelected == 2 and columnSelected == 2 then
-		--	Input.press("A", 2)
-		--else
-			Input.escape()
-		--end
+
+	if battlemenu == 137 then
+		local cursor = Memory.value("battle", "main_menu")
+		if cursor == 0 or cursor == 2 then
+			Input.press("Right")
+		elseif cursor == 1 then
+			Input.press("Down")
+		else
+			Input.press("A")
+		end
+	else
+		Input.press("B", 2)
 	end
+
 end
 
 function Battle.handle()
-	--if not Control.shouldCatch() then
-		--if Control.shouldFight() then
-		--	Battle.fight()
-		--else
+	if not Control.shouldCatch() then
+		if Control.shouldFight() then
+			Battle.fight()
+		else
 			Battle.run()
-		--end
-	--end
+		end
+	else
+		Battle.noKill()
+	end
 end
 
 function Battle.handleWild()

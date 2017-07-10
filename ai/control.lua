@@ -15,7 +15,7 @@ local potionInBattle = true
 local encounters = 0
 
 local canDie, shouldFight, minExp
-local shouldCatch, attackIdx
+local shouldCatch, attackIdx, canCatch
 local extraEncounter, maxEncounters
 local battleYolo
 
@@ -147,59 +147,40 @@ end
 	end
 end`]]
 
-function Control.canCatch(partySize)
-	if not partySize then
-		partySize = Memory.value("player", "party_size")
+function Control.canCatch()
+
+	--We're asking here if we CAN catch a pokemon here, that means asking
+	--if we have pokeballs AND if we're not in a trainer battle!
+
+	--POSSIBLE EXCEPTION:
+	--Legendary pokemon?
+	--(Make exception?)
+	local canrun = Memory.value("battle", "canrun")
+	if not canrun then
+		return false
 	end
+
 	local pokeballs = Inventory.count("pokeball")
-	--local minimumCount = 4 - partySize
+
 	local minimumCount = 1
 	if pokeballs < minimumCount then
-		Strategies.reset("Not enough PokeBalls", pokeballs)
+		--Strategies.reset("Not enough PokeBalls", pokeballs)
 		return false
 	end
 	return true
+
 end
 
---[[function Control.shouldCatch(partySize)
-	if maxEncounters and encounters > maxEncounters then
-		local extraCount = extraEncounter and Pokemon.inParty(extraEncounter)
-		if not extraCount or encounters > maxEncounters + 1 then
-			Strategies.reset("Too many encounters", encounters)
-			return false
-		end
+function Control.shouldCatch()
+
+	if not canCatch then
+		canCatch = Control.canCatch()
 	end
-	if not shouldCatch then
-		return false
-	end
-	if not partySize then
-		partySize = Memory.value("player", "party_size")
-	end
-	if partySize == 4 then
-		shouldCatch = nil
-		return false
-	end
-	if not Control.canCatch(partySize) then
-		return true
-	end
-	local oid = Memory.value("battle", "opponent_id")
-	for i,poke in ipairs(shouldCatch) do
-		if oid == Pokemon.getID(poke.name) and not Pokemon.inParty(poke.name, poke.alt) then
-			if not poke.lvl or Utils.match(Memory.value("battle", "opponent_level"), poke.lvl) then
-				local penultimate = poke.hp and Memory.double("battle", "opponent_hp") > poke.hp
-				if penultimate then
-					penultimate = Combat.nonKill()
-				end
-				if penultimate then
-					require("action.battle").fight(penultimate.midx)
-				else
-					Inventory.use("pokeball", nil, true)
-				end
-				return true
-			end
-		end
-	end
-end]]
+
+	--TODO Check if one of the pokemon listed in Pokemon. (The module)
+	--(Eh, which still needs a little update to have a function to do that...)
+
+end
 
 -- Items
 
@@ -224,9 +205,9 @@ function Control.encounters()
 end
 
 function Control.encounter()
-	local wildBattle = false
+	--local wildBattle = false
 	local battlemenu = Memory.value("battle", "menu")
-	local canrun = Memory.value("battle", "canrun")
+
 	if canrun == 0 then
 		wildBattle = true
 	elseif canrun == 3 then
@@ -249,11 +230,7 @@ function Control.encounter()
 			--local plscatch = false
 			--local plsfight = false
 
-			--Needs pokeball check!
 
-
-			--Need to check if I want to fight?
-			--Might want to let that depend on something else
 
 			Battle.handle()
 
@@ -293,8 +270,9 @@ end
 function Control.reset()
 	canDie = false
 	oneHits = false
-	--shouldCatch = nil
-	--shouldFight = nil
+	canCatch = nil
+	shouldCatch = nil
+	shouldFight = nil
 	extraEncounter = nil
 	potionInBattle = true
 	encounters = 0

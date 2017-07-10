@@ -11,22 +11,25 @@ team[1] = 258
 local pokes = 1
 
 local pokeIDs = {
-	
+
+	-- I think I'll need to check every ID for this,
+	-- good for my TODO list I guess?
+
 	--These IDs are the ones I need I think.
-	mudkip = 258, --Couldn't find mudkip's RAM number.
-	poochyena = 30, 
+	mudkip = 258, --I'll find the actual number later
+	poochyena = 30,
 	taillow = 48,
 	zigzagoon = 32,
-	nincada = 45, 
+	nincada = 45,
 	abra = 63,
-	
-	
+
+
 	marill = 183,
-	silcoon = 35, 
-	lotad = 39, 
-	seedot = 42, 
-	whismur = 114, 
-	
+	silcoon = 35,
+	lotad = 39,
+	seedot = 42,
+	whismur = 114,
+
 }
 
 local moveList = {
@@ -37,7 +40,7 @@ local moveList = {
 	teleport = 100,
 	watefall = 127,
 	whirlpool = 250,
-	
+
 	sand_attack = 28,
 	horn_attack = 30,
 	horn_drill = 32,
@@ -112,6 +115,17 @@ end
 Pokemon.indexOf = indexOf]]
 
 -- Table functions
+
+function Pokemon.PartySize()
+
+	--TODO If I need a table size in any other part of this code, make a new module for it.
+	--Why the hell doesn't it exist anyway?
+
+	local count = 0
+	for poke in pairs(team) do count = count + 1 end
+	return count
+
+end
 
 function Pokemon.battleMove(name)
 	local mid = moveList[name]
@@ -249,7 +263,7 @@ end
 
 function Pokemon.has(pokeID)
    for i, val in ipairs(team) do
-      if val == pokeID then 
+      if val == pokeID then
          return true
       end
    end
@@ -282,8 +296,8 @@ function Pokemon.use(move)
 	else
 		return false
 	end
-	
-	
+
+
 	--[[if main == 141 then
 		Input.press("A")
 	elseif main == 128 then
@@ -331,4 +345,3 @@ end
 end]]
 
 return Pokemon
-

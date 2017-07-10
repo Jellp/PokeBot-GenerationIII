@@ -245,15 +245,17 @@ function Control.encounter()
 			end
 		else
 
-			local opponent = Memory.value("battle", "opponent_id")
-			local plscatch = false
-			local plsfight = false
+			--local opponent = Memory.value("battle", "opponent_id")
+			--local plscatch = false
+			--local plsfight = false
 
 			--Needs pokeball check!
 
 
 			--Need to check if I want to fight?
 			--Might want to let that depend on something else
+
+			Battle.handle()
 
 			if not plscatch and not plsfight then
 				--Flee

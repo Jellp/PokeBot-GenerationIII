@@ -30,9 +30,11 @@ CUSTOM_SEED = nil		 		-- Set to a known seed to replay it, or leave nil for rand
 PAINT_ON    = true 				-- Display contextual information while the bot runs
 
 --Names Settings 
-PLAYER_NAME = "B"			-- Player name
-RIVAL_NAME = "B"			-- Rival name
-MUDKIP_NAME = "B"			-- Set Mudkip name
+PLAYER_NAME = "A"			-- Player name
+RIVAL_NAME = "A"			-- Rival name
+MUDKIP_NAME = "A"			-- Set Mudkip name
+
+VERSION = "E-1.0.0-BETA" --Emerald-MAJOR-AREA-PATHEDITS
 
 --NAMES SETTINGS TIPS : 
 --		- Can use up to 7 letter ingame
@@ -56,185 +58,26 @@ MUDKIP_NAME = "B"			-- Set Mudkip name
 --#####################################################################################
 
 -- SET VALUES
+SEED = os.time()
+-- To set seed, math.randomseed(SEED) but maybe using this elsewhere
 
-local VERSION = "E-0.2.0-BETA" --Emerald-MAJOR-AREA-PATHEDITS
+-- Set up stateful libraries
+-- testingsd = loadfile("folder/test.lua")()
 
-local START_WAIT = 99
-local hasAlreadyStartedPlaying = false
-local oldSeconds
-local running = true
-local lastHP
+-- TODO ADD WHEN FINDING SOMETHING FOR THIS :)
 
---RUNNING4CONTINUE = false		--used to continue a game
---RUNNING4NEWGAME = true			--used to make a new game (remove last save also)
---EXTERNALDONE = false			--used when the above settings are done externally
---local InternalDone = false 		--used when the above settings are done internally
+-- Set up stateless libraries
+local util = {}
+util.reset = loadfile("utils/reset.lua")()
 
--- LOAD DIR
+-- Initialisation
+util.reset.hard()
 
-local LowerGameName = string.lower(GAME_NAME)
 
-local Battle = require "action.battle"
-local Textbox = require "action.textbox"
-local Walk = require "action.walk"
+-- Main loop
 
-local Combat = require "ai.combat"
-local Control = require "ai.control"
-local Strategies = require("ai."..LowerGameName..".strategies")
-
-local Bridge = require "util.bridge"
-local Input = require "util.input"
-local Memory = require "util.memory"
-local Menu = require "util.menu"
-local Paint = require "util.paint"
-local Utils = require "util.utils"
-local Settings = require "util.settings"
-
-local Pokemon = require "storage.pokemon"
-
--- GLOBAL
-
-function p(...)	--print
-	local string
-	if #arg == 0 then
-		string = arg[0]
-	else
-		string = ""
-		for i,str in ipairs(arg) do
-			if str == true then
-				string = string.."\n"
-			else
-				string = string..str.." "
-			end
-		end
-	end
-	print(string)
-end
-
--- RESET
-
-local function resetAll()
-	Strategies.softReset()
-	Combat.reset()
-	Control.reset()
-	Walk.reset()
-	Paint.reset()
-	Bridge.reset()
-	oldSeconds = 0
-	running = false
-	Utils.reset()
-	-- client.speedmode = 200
+while (true) do
 	
-	if CUSTOM_SEED then
-		Strategies.seed = CUSTOM_SEED
-		p("RUNNING WITH A FIXED SEED ("..Strategies.seed.."), every run will play out identically!", true)
-	else
-		Strategies.seed = os.time()
-		p("Starting a new run with seed "..Strategies.seed, true)
-	end
-	math.randomseed(Strategies.seed)
-end
 
--- EXECUTE
-
-local OWNER = "Bouletmarc"
---p("PokeBot Version "..VERSION, true)
---p("Running Pokemon "..GAME_NAME, true)
-print("PokeBot version "..VERSION)
-print("Running Pokemon "..GAME_NAME)
-
-Control.init()
-
---STREAMING_MODE = not walk.init()
-if INTERNAL and STREAMING_MODE then
-	RESET_FOR_TIME = true
-end
-
-if CUSTOM_SEED then
-	client.reboot_core()
-else
-	hasAlreadyStartedPlaying = Utils.ingame()
-end
-
-Strategies.init(hasAlreadyStartedPlaying)
-if RESET_FOR_TIME and hasAlreadyStartedPlaying then
-	RESET_FOR_TIME = false
-	p("Disabling time-limit resets as the game is already running. Please reset the emulator and restart the script if you'd like to go for a fast time.", true)
-end
-if STREAMING_MODE then
-	Bridge.init()
-else
-	Input.setDebug(true)
-end
-
--- MAIN LOOP
-
-local previousMap
-
-while true do
-	local currentMap = Memory.double("game", "map")
-	if currentMap ~= previousMap then
-		Input.clear()
-		previousMap = currentMap
-	end
-	
-	--if Strategies.frames then
-		--if Memory.value("game", "battle") == 0 then
-	--		Strategies.frames = Strategies.frames + 1
-		--end
-	--	Utils.drawText(0, 80, Strategies.frames)
-	--end
-	--if Bridge.polling then
-	--	Settings.pollForResponse()
-	--end
-
-	if not Input.update() then
-		if not Utils.ingame() and currentMap == 0 then
-			if running then
-				if not hasAlreadyStartedPlaying then
-					if emu.framecount() == 1 then client.reboot_core() end
-					hasAlreadyStartedPlaying = true
-				else
-					resetAll()
-				end
-			else
-				Settings.startNewAdventure(START_WAIT)
-			end
-		else
-			if not running then
-				Bridge.liveSplit()
-				running = true
-			end
-			local Cantmove = Memory.value("player", "cantmove")
-			local battlemenu = Memory.value("battle", "menu")
-			local battleState = Memory.value("game", "battle") 
-			if battleState == 1 or battlemenu > 5 and battleState == 1 then --We b battlin, battlemenu can go up to >=45
-				Control.encounter(battlemenu)
-				--local curr_hp = Pokemon.index(0, "hp")
-				--if curr_hp == 0 and not Control.canDie() and Pokemon.index(0) > 0 then
-				--	Strategies.death(currentMap)
-			elseif Walk.strategy then
-				if Strategies.execute(Walk.strategy) then
-					Walk.traverse(currentMap)
-				end
-			elseif Textbox.handle() then
-				Walk.traverse(currentMap)
-			end
-		end
-	end
-
-	if STREAMING_MODE then
-		local newSeconds = Memory.value("time", "seconds")
-		if newSeconds ~= oldSeconds and (newSeconds > 0 or Memory.value("time", "frames") > 0) then
-			Bridge.time(Utils.elapsedTime())
-			oldSeconds = newSeconds
-		end
-	elseif PAINT_ON then
-		Paint.draw(currentMap)
-	end
-
-	Input.advance()
 	emu.frameadvance()
 end
-
-Bridge.close()

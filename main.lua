@@ -12,7 +12,7 @@ RESET_FOR_ENCOUNTERS = false 	-- Set to false if you just want to see the bot fi
 GAME_NAME = "Emerald"			-- Set to Ruby/Sapphire or Emerald
 GAME_HOURS = 10					-- Set the internal game hour (0-23h)
 GAME_MINUTES = 0				-- Set the internal game minutes (0-59min)
-GAME_GENDER = 2				-- Set the player gender (1-2 // boy-girl)
+GAME_GENDER = 2					-- Set the player gender (1-2 // boy-girl)
 
 GAME_TEXT_SPEED = 2				-- Set the Text Speed (0-2 // slow-fast)
 GAME_BATTLE_ANIMATION = 0		-- Set the battle animation (0-1 // no-yes)
@@ -24,19 +24,22 @@ GAME_WINDOWS_STYLE = 4			-- Set the windows style (0-19)
 --Connection Settings
 INTERNAL = false				-- Allow connection with LiveSplit ?
 STREAMING_MODE = false			-- Enable Streaming mode
+DEBUG = true					-- Print debug messages or do other debug things
 
 --Script Settings
 CUSTOM_SEED = nil		 		-- Set to a known seed to replay it, or leave nil for random runs
 PAINT_ON    = true 				-- Display contextual information while the bot runs
 
---Names Settings 
-PLAYER_NAME = "A"			-- Player name
-RIVAL_NAME = "A"			-- Rival name
-MUDKIP_NAME = "A"			-- Set Mudkip name
+ROUTE = "mudkipAbra"			-- The 'path' you'd like to take, must be a folder inside paths
 
-VERSION = "E-1.0.0-BETA" --Emerald-MAJOR-AREA-PATHEDITS
+--Names Settings
+PLAYER_NAME = "A"				-- Player name
+RIVAL_NAME = "A"				-- Rival name
+MUDKIP_NAME = "A"				-- Set Mudkip name
 
---NAMES SETTINGS TIPS : 
+VERSION = "E-1.0.0-BETA" 		--Emerald-MAJOR-AREA-PATHEDITS
+
+--NAMES SETTINGS TIPS :
 --		- Can use up to 7 letter ingame
 --		- Upper, Lower case and Number allowed
 --		- Specials Characters :
@@ -58,26 +61,33 @@ VERSION = "E-1.0.0-BETA" --Emerald-MAJOR-AREA-PATHEDITS
 --#####################################################################################
 
 -- SET VALUES
-SEED = os.time()
+SEED = os.time() -- Currently used RNG seed
 -- To set seed, math.randomseed(SEED) but maybe using this elsewhere
 
 -- Set up stateful libraries
 -- testingsd = loadfile("folder/test.lua")()
 
--- TODO ADD WHEN FINDING SOMETHING FOR THIS :)
+path = loadfile("paths/"..ROUTE.."/route.lua")()
+input = loadfile("utils/input.lua")()
 
 -- Set up stateless libraries
 local util = {}
 util.reset = loadfile("utils/reset.lua")()
+util.loop = loadfile("utils/endofloop.lua")()
 
 -- Initialisation
 util.reset.hard()
-
+path.init()
 
 -- Main loop
 
 while (true) do
-	
+	path.execute()
 
-	emu.frameadvance()
+	if (not input.isAssigned("A")) then
+		input.add("A", 30)
+		input.add("B", 15)
+	end
+
+	util.loop.endOfLoop()
 end

@@ -16,18 +16,14 @@ local function setSeed(seed)
     math.randomseed(seed)
 end
 
-function _export.soft() 
-    print("Softly resetting")
-end
-
-function _export.hard() 
-    print("Hardly resetting")
+function _export.reset() 
+    if (DEBUG) then print("Hardly resetting") end
     -- TODO Actual reset of stateful libraries
 
     -- Reset seed
     setSeed(os.time())
 
-    client.reboot_core()
+    input.add("Power")
 
     console.clear()
     printStart()
